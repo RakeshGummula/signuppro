@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Welcome to the Dashboard, {{ user_data.username }}!</h1>
+
+        {% if user_data.is_patient %}
+            <h2>Patient Information</h2>
+            <p>Email: {{ user_data.email }}</p>
+            <p>First Name: {{ user_data.first_name }}</p>
+            <p>Last Name: {{ user_data.last_name }}</p>
+            <p>Address Line 1: {{ user_data.address_line1 }}</p>
+            <p>City: {{ user_data.city }}</p>
+            <p>State: {{ user_data.state }}</p>
+            <p>Pincode: {{ user_data.pincode }}</p>
+           
+        {% elif user_data.is_doctor %}
+            <h2>Doctor Information</h2>
+            <p>Email: {{ user_data.email }}</p>
+            <p>First Name: {{ user_data.first_name }}</p>
+            <p>Last Name: {{ user_data.last_name }}</p>
+            <p>Address Line 1: {{ user_data.address_line1 }}</p>
+            <p>City: {{ user_data.city }}</p>
+            <p>State: {{ user_data.state }}</p>
+            <p>Pincode: {{ user_data.pincode }}</p>
+
+            {% endif %}
+
+        <!-- Logout form -->
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+    </body>
+</html>

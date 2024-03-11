@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Signup</h1>
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    <form method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Role selection -->
+        <label for="role">I am a:</label><br>
+        <input type="radio" name="role" value="patient" checked> Patient<br>
+        <input type="radio" name="role" value="doctor"> Doctor<br><br>
+
+        <!-- Common fields -->
+        <label for="first_name">First Name: </label>
+        <input type="text" placeholder="Enter First Name" name="first_name" required><br><br>
+
+        <label for="last_name">Last Name: </label>
+        <input type="text" placeholder="Enter Last Name" name="last_name" required><br><br>
+
+        <label for="username">Username: </label>
+        <input type="text" placeholder="Enter Username" name="username" required><br><br>
+
+        <label for="email">Email ID: </label>
+        <input type="email" placeholder="Enter Email ID" name="email" required><br><br>
+
+        <label for="password">Password: </label>
+        <input type="password" placeholder="Enter Password" name="password" required><br><br>
+
+        <label for="confirm_password">Confirm Password: </label>
+        <input type="password" placeholder="Enter Confirm Password" name="confirm_password" required><br><br>
+
+        <label for="address_line1">Address Line 1: </label>
+        <input type="text" placeholder="Enter Address Line 1" name="address_line1" required><br><br>
+
+        <label for="city">City: </label>
+        <input type="text" placeholder="Enter City" name="city" required><br><br>
+
+        <label for="state">State: </label>
+        <input type="text" placeholder="Enter State" name="state" required><br><br>
+
+        <label for="pincode">Pincode: </label>
+        <input type="text" placeholder="Enter Pincode" name="pincode" required><br><br>
+
+        <!-- Profile picture -->
+        <label for="profile_picture">Profile Picture: </label>
+        <input type="file" name="profile_picture"><br><br>
+
+        <!-- Specific fields for Patient -->
+        {% if role == 'patient' %}
+        <label for="patient_field">Patient-specific Field: </label>
+        <input type="text" placeholder="Enter Patient Field" name="patient_field"><br><br>
+        {% endif %}
+
+        <!-- Specific fields for Doctor -->
+        {% if role == 'doctor' %}
+        <label for="doctor_field">Doctor-specific Field: </label>
+        <input type="text" placeholder="Enter Doctor Field" name="doctor_field"><br><br>
+        {% endif %}
+
+        <input type="submit" value="Signup">
+        <a href="{% url 'login' %}">I already have an account</a>
+    </form>
+
+    <script>
+        function validateForm() {
+            var role = document.querySelector('input[name="role"]:checked');
+            var first_name = document.forms[0]["first_name"].value;
+            var last_name = document.forms[0]["last_name"].value;
+            var username = document.forms[0]["username"].value;
+            var email = document.forms[0]["email"].value;
+            var password = document.forms[0]["password"].value;
+            var confirm_password = document.forms[0]["confirm_password"].value;
+            var address_line1 = document.forms[0]["address_line1"].value;
+            var city = document.forms[0]["city"].value;
+            var state = document.forms[0]["state"].value;
+            var pincode = document.forms[0]["pincode"].value;
+
+            if (!role) {
+                alert("Please select a role (Patient or Doctor)");
+                return false;
+            }
+
+            if (
+                first_name === "" ||
+                last_name === "" ||
+                username === "" ||
+                email === "" ||
+                password === "" ||
+                confirm_password === "" ||
+                address_line1 === "" ||
+                city === "" ||
+                state === "" ||
+                pincode === ""
+            ) {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+            if (password !== confirm_password) {
+                alert("Passwords do not match");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+</html>
